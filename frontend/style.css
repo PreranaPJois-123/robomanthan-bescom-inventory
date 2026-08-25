@@ -1,0 +1,799 @@
+/* =========================================================================
+   RoboManthan Inventory -- Design System
+   One shared stylesheet used by every page (login, dashboard, BESCOM,
+   damaged-report). Every existing selector below still exists so nothing
+   that script.js/bescom.js touches breaks -- this is a re-skin, not a
+   restructure. New, additive classes (kpi cards, status pills, module nav)
+   are included for pages that opt in.
+   ========================================================================= */
+
+:root {
+  --color-bg: #f1f5f9;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-text: #1e293b;
+  --color-text-muted: #64748b;
+  --color-navy: #0f172a;
+  --color-navy-soft: #1e293b;
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+  --color-accent-soft: #dbeafe;
+  --color-success: #16a34a;
+  --color-success-soft: #dcfce7;
+  --color-warning: #d97706;
+  --color-warning-soft: #fef3c7;
+  --color-danger: #dc2626;
+  --color-danger-soft: #fee2e2;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  margin: 0;
+  padding: 24px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: background 0.2s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  margin-top: 40px;
+  font-size: 20px;
+  color: var(--color-text);
+}
+
+/* ---------------- Top navigation / header ---------------- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 22px;
+  background: var(--color-navy);
+  color: white;
+  border-radius: var(--radius-lg);
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-md);
+}
+
+.navbar h1 {
+  font-size: 19px;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.navbar > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logged-in-user {
+  font-size: 13px;
+  opacity: 0.85;
+  margin-right: 6px;
+}
+
+/* ---------------- Cards / KPI grid ---------------- */
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+}
+
+#issueFormContainer {
+  display: none;
+}
+
+.products.list {
+  display: block;
+  gap: 0;
+}
+
+#products {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.products.list .card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 14px;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.products.list .card img {
+  width: 100px;
+  height: 100px;
+}
+
+.products.list .card h3 {
+  margin: 0 0 6px 0;
+}
+
+.products.list .card p {
+  margin: 4px 0;
+}
+
+@media (max-width: 600px) {
+  .products.list .card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .products.list .card img {
+    width: 100%;
+    height: 180px;
+  }
+}
+
+#dashboard {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  justify-content: flex-start;
+}
+
+#dashboard .card {
+  width: 220px;
+  padding: 18px 20px;
+}
+
+.card {
+  width: 260px;
+  background: var(--color-surface);
+  padding: 18px 20px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-accent);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.card h3 {
+  margin: 0 0 6px 0;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-text-muted);
+}
+
+.card p {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.card img {
+  width: 180px;
+  height: 180px;
+  display: block;
+  margin: auto;
+  object-fit: contain;
+}
+
+.admin-critical {
+  border-top-color: var(--color-danger) !important;
+  background: var(--color-danger-soft);
+}
+
+.admin-low {
+  border-top-color: var(--color-warning) !important;
+  background: var(--color-warning-soft);
+}
+
+.admin-healthy {
+  border-top-color: var(--color-success) !important;
+  background: var(--color-success-soft);
+}
+
+/* ---------------- Buttons ---------------- */
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  background: var(--color-accent);
+  color: white;
+  font-weight: 600;
+  font-size: 13.5px;
+  margin: 5px;
+  transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+}
+
+button:hover {
+  background: var(--color-accent-hover);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  background: var(--color-border);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+/* Danger / destructive action variant (e.g. Delete buttons) -- consistent
+   with the app's existing danger color tokens used elsewhere for status
+   badges and low-stock indicators. */
+.btn-danger {
+  background: var(--color-danger);
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+}
+
+/* ---------------- Inputs / selects ---------------- */
+input,
+select,
+textarea {
+  padding: 10px 12px;
+  margin: 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  width: 250px;
+  font-size: 13.5px;
+  font-family: inherit;
+  background: var(--color-surface);
+  color: var(--color-text);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+select {
+  width: 270px;
+}
+
+label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin: 10px 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+#issueForm {
+  background: var(--color-surface);
+  padding: 22px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+/* ---------------- Dark mode ---------------- */
+.dark {
+  background: #0b1120;
+  color: #f1f5f9;
+}
+
+.dark .card {
+  background: #1e1e1e;
+  color: white;
+  border-color: #2f3947;
+}
+
+.dark #issueForm {
+  background: #1e1e1e;
+  border-color: #2f3947;
+}
+
+.dark .navbar {
+  background: black;
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  background: #1e1e1e;
+  color: white;
+  border-color: #2f3947;
+}
+
+.dark .modal-content {
+  background: #1e1e1e;
+  color: white;
+}
+
+.dark .bescom-table-container,
+.dark table {
+  background: #1e1e1e;
+}
+
+/* ---------------- Search bar ---------------- */
+.searchBox {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.searchBox input {
+  width: 500px;
+  max-width: 100%;
+  padding: 14px 18px;
+  font-size: 15px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  box-sizing: border-box;
+}
+
+.low {
+  color: var(--color-warning);
+  font-weight: 700;
+}
+
+.critical {
+  color: var(--color-danger);
+  font-weight: 700;
+}
+
+.healthy {
+  color: var(--color-success);
+  font-weight: 700;
+}
+
+.workshopTitle {
+  color: #ffb74d;
+}
+
+.projectTitle {
+  color: #64b5f6;
+}
+
+.products.list .card img {
+  width: 100px !important;
+  height: 100px !important;
+  object-fit: contain;
+  margin: 0 12px 0 0;
+}
+
+.products.list .card {
+  align-items: center;
+}
+
+.products.list .card .card-info {
+  flex: 1;
+}
+
+.products.list .card .card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-left: 12px;
+}
+
+#dashboard .card h3 {
+  margin: 0 0 8px 0;
+}
+
+/* ---------------- Modals ---------------- */
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(15, 23, 42, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modalFadeIn 0.15s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background-color: var(--color-surface);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  width: 420px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border);
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  font-size: 17px;
+}
+
+.damaged-modal {
+  max-width: 900px;
+  width: min(95vw, 900px);
+}
+
+/* ---------------- Generic data tables (BESCOM + damaged products) ---------------- */
+.damaged-table,
+.bescom-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.damaged-table th,
+.bescom-table th {
+  background: var(--color-navy-soft);
+  color: white;
+  text-transform: uppercase;
+  font-size: 11.5px;
+  letter-spacing: 0.03em;
+  font-weight: 700;
+}
+
+.damaged-table th,
+.damaged-table td,
+.bescom-table th,
+.bescom-table td {
+  padding: 11px 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.bescom-table tbody tr:nth-child(even) {
+  background: var(--color-surface-alt);
+}
+
+.damaged-table td img {
+  width: 56px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.damaged-table th:nth-child(1),
+.damaged-table td:nth-child(1) {
+  width: 10%;
+}
+.damaged-table th:nth-child(2),
+.damaged-table td:nth-child(2) {
+  width: 25%;
+  white-space: normal;
+}
+.damaged-table th:nth-child(3),
+.damaged-table td:nth-child(3) {
+  width: 12%;
+}
+.damaged-table th:nth-child(4),
+.damaged-table td:nth-child(4) {
+  width: 12%;
+}
+.damaged-table th:nth-child(5),
+.damaged-table td:nth-child(5) {
+  width: 12%;
+}
+.damaged-table th:nth-child(6),
+.damaged-table td:nth-child(6) {
+  width: 12%;
+}
+.damaged-table th:nth-child(7),
+.damaged-table td:nth-child(7) {
+  width: 7%;
+}
+
+@media (max-width: 600px) {
+  .damaged-table th,
+  .damaged-table td {
+    white-space: normal;
+  }
+  .damaged-table img {
+    width: 48px;
+    height: 28px;
+  }
+}
+
+.modal .close {
+  float: right;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  line-height: 1;
+}
+
+.modal .close:hover {
+  color: var(--color-danger);
+}
+
+#activeSession {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+#activeSession .label {
+  background: var(--color-surface);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+#activeSession .actions button {
+  margin-left: 8px;
+}
+
+/* ---------------- Notifications ---------------- */
+.notif-bell {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  margin-right: 4px;
+  cursor: pointer;
+  padding: 8px;
+}
+.notif-bell:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.notif-bell .notif-count {
+  display: inline-block;
+  background: var(--color-accent);
+  color: #fff;
+  border-radius: 10px;
+  padding: 2px 6px;
+  margin-left: 4px;
+  font-weight: 700;
+  font-size: 11px;
+}
+.notif-dropdown {
+  color: var(--color-text);
+  position: absolute;
+  right: 20px;
+  top: 70px;
+  width: 320px;
+  max-height: 360px;
+  overflow: auto;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 12px;
+  z-index: 2000;
+  border: 1px solid var(--color-border);
+}
+.notif-item {
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--color-border);
+}
+.notif-item.unread {
+  background: var(--color-accent-soft);
+  border-radius: var(--radius-sm);
+}
+.notif-item .time {
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+.notif-actions {
+  margin-top: 8px;
+  text-align: right;
+}
+.notif-actions button {
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+.password-container {
+  position: relative;
+  display: inline-block;
+}
+
+.password-container input {
+  padding-right: 45px;
+}
+
+.password-container button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  margin: 0;
+}
+
+.password-container button:hover {
+  background: transparent;
+}
+
+/* ---------------- Status badges (generic, reusable) ---------------- */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.status-badge.success,
+.bescom-status.Active {
+  background: var(--color-success-soft);
+  color: #166534;
+}
+
+.status-badge.warning {
+  background: var(--color-warning-soft);
+  color: #92400e;
+}
+
+.status-badge.danger {
+  background: var(--color-danger-soft);
+  color: #991b1b;
+}
+
+.status-badge.neutral,
+.bescom-status.Inactive {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+/* ---------------- Login page ---------------- */
+.loginBox {
+  max-width: 380px;
+  margin: 10vh auto;
+  background: var(--color-surface);
+  padding: 32px 28px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.loginBox h1 {
+  font-size: 20px;
+  margin-bottom: 24px;
+}
+
+.loginBox input {
+  width: 100%;
+  margin: 8px 0;
+}
+
+.loginBox button {
+  width: 100%;
+  margin: 8px 0 0;
+  padding: 12px;
+}
+
+.login-message {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md, 8px);
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  font-size: 14px;
+  text-align: left;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 768px) {
+  body {
+    padding: 12px;
+  }
+
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .searchBox {
+    flex-direction: column;
+    margin: 10px 0;
+  }
+
+  .searchBox input {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  #products {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+  }
+
+  .card {
+    width: auto;
+    padding: 12px;
+  }
+
+  .card img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .card h3 {
+    font-size: 11px;
+  }
+
+  .card p {
+    font-size: 20px;
+  }
+
+  button {
+    font-size: 12px;
+    padding: 9px 12px;
+  }
+
+  #dashboard {
+    justify-content: center;
+  }
+
+  #dashboard .card {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .modal-content {
+    width: 95vw;
+  }
+
+  input,
+  select {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}

@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+  <head>
+    <title>BESCOM Inventory Login</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="loginBox">
+      <h1>⚡ BESCOM Inventory</h1>
+
+      <input
+        type="email"
+        id="adminEmail"
+        placeholder="Authorized company email"
+      />
+
+      <div class="password-container">
+        <input type="password" id="adminPass" placeholder="Password" />
+
+        <button
+          type="button"
+          id="toggleAdminPass"
+          onclick="toggleAdminPassword()"
+        >
+          👁️
+        </button>
+      </div>
+
+      <button onclick="loginAdmin()">Login</button>
+
+      <div id="loginMessage" class="login-message" style="display: none"></div>
+    </div>
+    <script src="config.js"></script>
+    <script>
+      function toggleAdminPassword() {
+        const input = document.getElementById("adminPass");
+        const btn = document.getElementById("toggleAdminPass");
+
+        if (input.type === "password") {
+          input.type = "text";
+          btn.textContent = "🙈";
+        } else {
+          input.type = "password";
+          btn.textContent = "👁️";
+        }
+      }
+
+      function showLoginMessage(message) {
+        const el = document.getElementById("loginMessage");
+        if (!message) {
+          el.style.display = "none";
+          el.textContent = "";
+          return;
+        }
+        el.textContent = message;
+        el.style.display = "block";
+      }
+
+      async function loginAdmin() {
+        let email = document.getElementById("adminEmail").value.trim();
+        let pass = document.getElementById("adminPass").value;
+
+        if (!email || !pass) {
+          showLoginMessage("Please enter your email and password.");
+          return;
+        }
+
+        let response;
+        try {
+          response = await fetch(`${API_URL}/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password: pass }),
+          });
+        } catch (e) {
+          showLoginMessage("Could not reach the server. Please try again.");
+          return;
+        }
+
+        let result;
+        try {
+          result = await response.json();
+        } catch (e) {
+          showLoginMessage("Unexpected server response. Please try again.");
+          return;
+        }
+
+        if (result.success && result.role === "admin") {
+          if (result.token) localStorage.setItem("token", result.token);
+          localStorage.setItem("role", "admin");
+          localStorage.setItem("userEmail", email);
+          window.location.href = "bescom.html";
+        } else {
+          // Same message whether the email is unrecognized or the
+          // password is wrong -- avoids confirming which accounts exist.
+          showLoginMessage(
+            result.message ||
+              "Access denied. This inventory system is restricted to authorized users.",
+          );
+        }
+      }
+
+      document.getElementById("adminPass").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") loginAdmin();
+      });
+    </script>
+  </body>
+</html>
