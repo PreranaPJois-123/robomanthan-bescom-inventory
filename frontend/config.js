@@ -1,1 +1,1 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "https://robomanthan-bescom-inventory.onrender.com";
