@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BESCOM Inventory | RoboManthan</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="bescom.css" />
+  </head>
+
+  <body>
+    <div class="navbar">
+      <h1>⚡ BESCOM Inventory</h1>
+      <div>
+        <span id="loggedInUser" class="logged-in-user"></span>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+    <!-- Summary cards -->
+    <div id="bescomSummary" class="products bescom-summary">Loading...</div>
+
+    <div id="bescomError" class="bescom-error" style="display: none"></div>
+
+    <!-- ===== Components section ===== -->
+    <div class="bescom-section-header">
+      <h2>Components</h2>
+      <div class="bescom-toolbar">
+        <input
+          type="text"
+          id="componentSearch"
+          placeholder="🔍 Search by name or serial number"
+          onkeyup="onComponentSearch()"
+        />
+        <select id="componentCategoryFilter" onchange="onComponentSearch()">
+          <option value="">All categories</option>
+        </select>
+        <button id="addComponentBtn" onclick="openAddComponentModal()" style="display: none">
+          + Add Component
+        </button>
+      </div>
+    </div>
+    <div id="bescomComponentsContainer" class="bescom-table-container">Loading...</div>
+
+    <div class="bescom-section-header">
+      <button type="button" onclick="downloadBescomReport()">Download Report</button>
+    </div>
+    <div id="bescomReportStatus" class="bescom-error" style="display: none"></div>
+
+    <!-- ===== Add / Edit Component Modal ===== -->
+    <div id="componentModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <span class="close" onclick="closeComponentModal()">&times;</span>
+        <h3 id="componentModalTitle">Add Component</h3>
+
+        <p class="bescom-hint">All fields are optional — fill in whatever you know and save.</p>
+
+        <div id="componentFormSerialRow" style="display: none">
+          <label>Serial Number</label>
+          <input id="componentFormSerial" disabled />
+        </div>
+
+        <label>Component Code <span class="bescom-optional">(optional, auto-generated if left blank — not the same as the Serial Number, which is assigned automatically and shown in the table)</span></label>
+        <input id="componentFormCode" placeholder="e.g. COMP-001" />
+
+        <label>Component Name</label>
+        <input id="componentFormName" placeholder="e.g. Cable" />
+
+        <label>Category</label>
+        <input id="componentFormCategory" placeholder="e.g. Wiring" />
+
+        <label>Total Stock</label>
+        <input id="componentFormQuantity" type="number" min="0" placeholder="0" />
+
+        <label>Quantity Damaged</label>
+        <input id="componentFormDamaged" type="number" min="0" placeholder="0" />
+
+        <label>Damage Reason</label>
+        <input id="componentFormDamageReason" placeholder="e.g. Burnt" />
+
+        <label>Damage Description</label>
+        <input id="componentFormDamageDescription" placeholder="Optional details" />
+
+        <label>Notes</label>
+        <input id="componentFormNotes" placeholder="Optional notes" />
+
+        <label>Description</label>
+        <input id="componentFormDescription" placeholder="Optional description" />
+
+        <label id="componentFormStatusLabel" style="display: none">Status</label>
+        <select id="componentFormStatus" style="display: none">
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+
+        <div id="componentFormError" class="bescom-error" style="display: none"></div>
+
+        <div style="margin-top: 12px">
+          <button onclick="submitComponentForm()">Save Component</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="bescom.js"></script>
+  </body>
+</html>

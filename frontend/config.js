@@ -1,0 +1,1 @@
+const API_URL = "https://robomanthan-bescom-inventory.onrender.com";
