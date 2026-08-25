@@ -1,1 +1,1 @@
-const API_URL = "https://robomanthan-bescom-inventory.onrender.com";
+const API_URL = "https://robomanthan-bescom-inventory-1.onrender.com";
